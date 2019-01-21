@@ -1,0 +1,126 @@
+doctype html
+html(lang='en')
+    include templates/head
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+    body
+        include templates/nav
+        - if ( admin )
+            div(style='visibility:hidden', id='store')
+            div(class='modal', id='post-editor')
+                div(class='modal-background')
+                div(class='modal-card')
+                    header(class='modal-card-head')
+                        p(class='modal-card-title') create new post
+                        button(class='delete', aria-label='close')
+                    section(class='modal-card-body')
+                        div(class='field')
+                            div(class='control')
+                                input(class='input', type='text', placeholder='title', id='title')
+                        div(class='field')
+                            div(class='control')
+                                input(class='input', type='text', placeholder='description', id='description')
+                        div(class='field')
+                            div(class='control')
+                                textarea(class='textarea', placeholder='content', rows="10", id='content')
+                        div(class='field')
+                            div(class='control')
+                                button(class='button is-link', id='submit-new') create post
+                        div(class='field')
+                            div(class='control')
+                                button(class='button is-link is-primary', id='submit-edit', style='visibility:hidden') save post
+                button(class='modal-close is-large', aria-label='close')
+            section(class='section')
+                div(class='container')
+                    nav(class='panel')
+                        p(class='panel-heading') blog posts
+                        div(class='panel-block')
+                            div(class='field')
+                                div(class='control')
+                                    button(class='button is-link is-primary', id="new-post") create new post
+                        - foreach(post; posts)
+                            div(class='panel-block')
+                                div(class='field is-grouped')
+                                    div(class='control')
+                                        button(class='button is-link is-warning', id="edit-" ~ post.url, onclick="postEdit(\"" ~ post.url ~ "\");") edit
+                                    div(class='control')
+                                        button(class='button is-link is-danger deletepost', id="delete-" ~ post.url, onclick="postDelete(\"" ~ post.url ~ "\");") delete
+                                    a(href="/blog/" ~ post.url)
+                                        strong #{ post.name }
+                                    span(style='width: 15px')
+                                    p #{ post.description }
+            section(class='section')
+                div(class='container')
+                    nav(class='panel')
+                        p(class='panel-heading') stats
+                        -foreach(stat; stats)
+                            div(class='panel-block')
+                                strong #{ stat.loads }
+                                span(style='width: 200px')
+                                p #{ stat.url }
+        :javascript
+            $("#new-post").click(function() {
+                $("#post-editor").addClass("is-active");
+                $("#submit-new").css("visibility", "visible");
+                $("#submit-edit").css("visibility", "hidden");
+            });
+            $(".modal-background").click(function() {
+                $("#post-editor").removeClass("is-active");
+            });
+            $(".modal-close").click(function() {
+                $("#post-editor").removeClass("is-active");
+            });
+            $(".delete").click(function() {
+                $("#post-editor").removeClass("is-active");
+            });
+
+
+            $("#submit-new").click(function() {
+                $.post("/new-post", {
+                    title : $("#title").val(),
+                    description : $("#description").val(),
+                    content : $("#content").val()
+                }, function(r) {
+                    console.log(r);
+                    location.reload();
+                    $("#post-editor").removeClass("is-active");
+                });
+            });
+
+            $("#submit-edit").click(function() {
+                $.post("/edit-post", {
+                    title : $("#title").val(),
+                    description : $("#description").val(),
+                    content : $("#content").val(),
+                    url:    $("#store").html()
+                }, function(r) {
+                    console.log(r);
+                    location.reload();
+                    $("#post-editor").removeClass("is-active");
+                });
+            });
+
+            function postEdit(url) {
+                $.post("/get-post", {
+                    url: url
+                }, function(r) {
+                    console.log(r);
+                    $("#title").val(r.title);
+                    $("#description").val(r.description);
+                    $("#content").html(r.content);
+                    $("#store").html(r.url);
+
+                    $("#post-editor").addClass("is-active");
+                    $("#submit-new").css("visibility", "hidden");
+                    $("#submit-edit").css("visibility", "visible");
+                });
+            }
+
+            function postDelete(url) {
+                $.post("/delete-post", {
+                    url: url
+                }, function(r) {
+                    location.reload();
+                });
+            }     
+
+

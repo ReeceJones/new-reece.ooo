@@ -1,0 +1,15 @@
+.dub
+docs.json
+__dummy.html
+docs/
+new-reece-ooo.so
+new-reece-ooo.dylib
+new-reece-ooo.dll
+new-reece-ooo.a
+new-reece-ooo.lib
+new-reece-ooo-test-*
+*.exe
+*.o
+*.obj
+*.lst
+reece.ooo.json

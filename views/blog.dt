@@ -1,0 +1,12 @@
+doctype html
+html(lang='en')
+    include templates/head
+    body
+        include templates/nav
+        section(class='section')
+            div(class='container')
+                - foreach (post; posts)
+                    article(class='content notification')
+                        a(href="/blog/" ~ post.url)
+                            p(class='title')=post.name
+                        p(class='subtitle') #{post.date} - #{post.description}

@@ -1,0 +1,14 @@
+{
+	"description": "The new/current version of my website.",
+	"dependencies": {
+		"vibe-d": "~>0.8.4",
+		"dauth": "~>0.6.3"
+	},
+	"authors": [
+		"Reece Jones"
+	],
+	"copyright": "Copyright © 2019, Reece Jones",
+	"license": "proprietary",
+	"name": "new-reece-ooo",
+	"versions": ["VibeDefaultMain"]
+}

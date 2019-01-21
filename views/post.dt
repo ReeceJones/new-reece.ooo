@@ -1,0 +1,15 @@
+doctype html
+html(lang='en')
+    include templates/head
+    main
+        include templates/nav
+        section(class='section')
+            div(class='container')
+                p(class='title') #{ name }
+                p(class='subtitle') #{ date } - #{ description }
+                h3 By #{ author }
+                br
+                p(class='content')
+                    !=content
+
+

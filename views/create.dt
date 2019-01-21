@@ -1,0 +1,67 @@
+doctype html
+html(lang='en')
+    include templates/head
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+    body
+        include templates/nav
+        section(class='section')
+            div(class='container')
+                div(class='content')
+                    p(class='title') create account
+                div(class='tile is-ancestor')
+                    div(class='tile is-parent')
+                        div(class='tile is-child is-4')
+                            div(class='notification is-danger', id='error-field', style='visibility:hidden')
+                                p(class='content',id='error-field-content')
+                            div(class='field')
+                                label(class='label') username
+                                div(class='control')
+                                    input(class='input', id='username', type='text', placeholder='username')
+                            div(class='field')
+                                label(class='label') password
+                                div(class='control')
+                                    input(class='input', id='password', type='password', placeholder='username')
+                            div(class='field')
+                                div(class='control')
+                                    div(class='g-recaptcha', data-sitekey=sitekey, style='width: 304px; margin: 0 auto;')
+                            div(class='field is-grouped')
+                                div(class='control')
+                                    button(class='button is-link', id='submit') Submit
+                                div(class='control')
+                                    button(class='button is-text', id='login')
+                                        strong Already have an account?
+        :javascript
+            $("#submit").click(function() {
+                $("#submit").addClass("is-loading");
+                $.post("/create", {
+                    username : $("#username").val(),
+                    password : $("#password").val(),
+                    "g-recaptcha-response" : grecaptcha.getResponse()
+                }, 
+                function(response) {
+                    $("#submit").removeClass("is-loading");
+                    console.log(response.error);
+                    switch (response.error)
+                    {
+                        default:
+                        case 3:
+                        $("#error-field").css("visibility", "visible");
+                        $("#error-field-content").html("Authentification error: Database error");
+                        break;
+                        case 2:
+                        $("#error-field").css("visibility", "visible");
+                        $("#error-field-content").html("Authentification error: Invalid username/password error");
+                        breal;
+                        case 1:
+                        $("#error-field").css("visibility", "visible");
+                        $("#error-field-content").html("Authentification error: Captcha error");
+                        break;
+                        case 0:
+                        window.location.href = "/control-panel";
+                        break;
+                    }
+                });
+            });
+            $("#create").click(function() {
+                window.location.href = "/login";
+            });
