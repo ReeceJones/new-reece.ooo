@@ -13,3 +13,5 @@ new-reece-ooo-test-*
 *.obj
 *.lst
 reece.ooo.json
+new-reece-ooo
+site-access.log

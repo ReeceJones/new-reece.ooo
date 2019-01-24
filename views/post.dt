@@ -9,7 +9,6 @@ html(lang='en')
                 p(class='subtitle') #{ date } - #{ description }
                 h3 By #{ author }
                 br
-                p(class='content')
-                    !=content
-
+                article(class='content')
+                    |!=content
 
