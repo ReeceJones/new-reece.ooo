@@ -1,0 +1,42 @@
+doctype html
+html(lang='en')
+	include templates/head
+	body
+		div(class='section')
+			div(class='container')
+				p(class='content')
+					p(class='title') Hi Mr. Lewin, we as a class decided that we did not want to make an excel calculator and made this instead.
+				div(class='field is-grouped')
+					label(class='label') altitude
+					div(class='control')
+						input(class='input', id='alt', type='text', placeholder='altitude')
+					div(class='control')
+						button(class='button is-link', id='submit') calculate
+
+				p(class='content')
+					p(class='title') Temperature
+					br
+					p(id='temp')
+					br
+					p(class='title') Pressure
+					br
+					p(id='pressure')
+					br
+					p(class='title') Density
+					br
+					p(id='density')
+	:javascript
+		$("#submit").click(function() {
+			var in = $("#alt").val().replace(/,/g, '');
+			var C = parseFloat(in);
+			var T = 15.04 - 0.00649;
+			var pressure = 101.2 * Math.pow((T + 273.1) / 288.08, 5.256);
+			var density = (pressure) / (0.2869 * (T + 273.1));
+			
+
+			$("#temp").html(T.toString());
+			$("#pressure").html(pressure.toString());
+			$("#density").html(density.toString());
+		});
+
+
