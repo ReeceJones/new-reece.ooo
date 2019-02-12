@@ -38,7 +38,8 @@ public void renderPage(string PAGE, ALIASES...)(HTTPServerRequest req, HTTPServe
     bool admin = false;
 
     dbConnect();
-    statPageLoad(req.requestURL);
+    static if(PAGE != "error.dt")
+        statPageLoad(req.requestURL);
 
 
     if (session)
