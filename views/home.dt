@@ -2,12 +2,14 @@ doctype html
 html(lang='en')
     include templates/head
     body
-        section(class='hero is-primary is-large is-bold')
+        section(class='hero is-dark is-fullheight')
             div(class='hero-head')
                 include templates/nav
             div(class='hero-body has-text-centered')
-                p(class='title') Reece Jones
-                p(class='subtitle') a person who is passionate about computers and programming
+                div(class='container')
+                    article(class='content')
+                        p(class='title', style='font-size: 3.5em') Reece Jones
+                        p(class='subtitle') a person who is passionate about computers and programming
         section(class='section')
             div(class='container')
                 - if (posts.length > 0)
