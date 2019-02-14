@@ -8,6 +8,10 @@ nav(class='navbar', role='navigation', aira-label='main navigation')
                     |="blog"
                 a(class='navbar-item', href='https://github.com/ReeceJones')
                     |="github"
+                a(class='navbar-item', href='https://gist.github.com/ReeceJones')
+                    |="gist"
+                a(class='navbar-item', href='/projects')
+                    |="projects"
     div(class='navbar-menu')
         div(class='navbar-end')
             -if ( active )
