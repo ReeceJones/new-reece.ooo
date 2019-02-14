@@ -16,25 +16,25 @@ html(lang='en')
                     div(class='tile is-ancestor')
                         div(class='tile is-parent')
                             div(class='tile is-parent')
-                                article(class='tile is-child notification')
+                                div(class='tile is-child notification')
                                     a(href="/blog/" ~ posts[0].url) 
                                         p(class='title') #{ posts[0].name }
                                     p(class='subtitle') #{ posts[0].date } - #{ posts[0].description }
-                                    p(class='content') 
+                                    article(class='content') 
                                         != posts[0].content
                             - if (posts.length > 1)
                                 div(class='tile is-parent is-vertical')
                                     - if (posts.length > 1)
-                                        article(class='tile is-child notification')
+                                        div(class='tile is-child notification')
                                             a(href="/blog/" ~ posts[1].url) 
                                                 p(class='title') #{ posts[1].name }
                                             p(class='subtitle') #{ posts[1].date } - #{ posts[1].description }
-                                            p(class='content')
+                                            article(class='content')
                                                 != posts[1].content
                                     - if (posts.length > 2)
-                                        article(class='tile is-child notification')
+                                        div(class='tile is-child notification')
                                             a(href="/blog/" ~ posts[1].url) 
                                                 p(class='title') #{ posts[2].name }
                                             p(class='subtitle') #{ posts[2].date } - #{ posts[1].description }
-                                            p(class='content')
+                                            article(class='content')
                                                 != posts[2].content

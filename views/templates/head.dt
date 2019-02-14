@@ -5,3 +5,4 @@ head
     title reece.ooo
     link(href='/bulma.css', rel='stylesheet')
     script(src='https://www.google.com/recaptcha/api.js')
+    link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.7.2/css/all.css')
