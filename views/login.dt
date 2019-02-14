@@ -65,3 +65,6 @@ html(lang='en')
             $("#create").click(function() {
                 window.location.href = "/create";
             });
+
+    include templates/footer
+

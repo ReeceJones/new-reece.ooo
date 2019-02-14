@@ -38,3 +38,5 @@ html(lang='en')
                                             p(class='subtitle') #{ posts[2].date } - #{ posts[1].description }
                                             article(class='content')
                                                 != posts[2].content
+    include templates/footer
+
