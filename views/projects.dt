@@ -1,0 +1,33 @@
+doctype html
+html(lang='en')
+    include templates/head
+    body
+        section(class='hero is-dark is-small')
+            div(class='hero-head')
+                include templates/nav
+            div(class='hero-body')
+            div(class='hero-footer has-text-centered')
+                div(class='container')
+                    article(class='content')
+                        p(class='title', style='font-size: 2.5em') Projects
+        section(class='section')
+            div(class='container')
+                div(class='tile is-ancestor')
+                    div(class='tile is-parent is-vertical')
+                        article(class='tile is-child content notification')
+                            p(class='title') reece.ooo
+                            p
+                                |="What more do I need to say? This project is the very site that you are on right now!"
+                            p
+                                |="In all seriousness, it has taken a while to get to this point. I have been trying to get this site to be a clean, and beautiful looking site for a couple years, and I think that this current iteration is that point that I was trying to reach. So how was the site made?"
+                            p
+                                |="I really like D. I think about D everyday. I am always blown away by just how powerful D is. I'm not very punny am I? Well, if you didn't get the hint, my favorite programming language is D. If the name seems similar to C, don't worry, it's not C or C++, but it is it's own system programming language. Fun fact: it's made by Walter Bright who made Zortech, the first native C++ compiler, so he's a pretty smart guy. I won't talk about exactly why I like D here, if you want a list of reasons contact me, but I will talk about how this website works!"
+                            p
+                                |="When I first started making this site way back, I used PHP. That kinda sucked. PHP was not that fun to me, and what made it worst was all the super helful server errors. So I gave that up real quick. For one period of time I decided to just make the site out of pure HTML and CSS without anything else, and if I wanted to add a blo post I would just copy the template file and add it myself...It should be pretty obvious why I never did this. I got it to a cool point where I had navbar animations and stuff, but expanding the site would've been awful. So then I found the vibe.d framework after giving up for a little bit."
+                            p
+                                |="Vibe.d is awesome. Imagine all the benefits of PHP, except that you compile it, you have a coherent project structure, it uses diet instead of raw HTML, and it compiles giving you kick-ass runtime speed and functionality. That's what vibe.d is, and it was simple enough for me to understand it, and so I picked it up and learned it and then made my now old website. You can guess what's next...It had issues. Primarily, it was not expandable. It took a massive effort to refactor the spaghetti code that it was, especially the backend. Wow, the backend was one horrendeous mess. I eventually reallized that I needed to redo it, and so now here we are. Now I am still using vibe.d, but for all the frontend stuff I'm just using the amazing bulma.io css library. For the backend, I completely rewrote it, but this time I instead used insane amounts of metaprogramming to make the backend highly modular. Don't believe me? I add a field to a single struct, and all by itself, the backend will add this field to the database, and do all according calculations. It's great."
+                            p
+                                |="Anyways, I like this site now, hopefully you do. Also give D a try."
+
+    include templates/footer
+

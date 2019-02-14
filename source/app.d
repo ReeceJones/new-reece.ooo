@@ -27,6 +27,7 @@ shared static this()
 	router.get("/blog", &routeBlogIndex);
 	router.get("/blog/*", &routeBlogRequest);
 	router.get("/control-panel", &routeControlPanel);
+	router.get("/projects", &renderPage!("projects.dt"));
 	router.get("/altitude", &renderPage!("altitude.dt"));
 
 	// default rule, auto-server file from the public/ directory
