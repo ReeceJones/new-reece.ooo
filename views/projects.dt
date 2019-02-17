@@ -16,6 +16,9 @@ html(lang='en')
                     div(class='tile is-parent is-vertical')
                         article(class='tile is-child content notification')
                             p(class='title') reece.ooo
+                            a(href='https://github.com/ReeceJones/new-reece.ooo', class='subtitle has-text-link') 
+                                |="source"
+                                i(class='fas fa-code-branch')
                             p
                                 |="What more do I need to say? This project is the very site that you are on right now!"
                             p
@@ -29,5 +32,31 @@ html(lang='en')
                             p
                                 |="Anyways, I like this site now, hopefully you do. Also give D a try."
 
+                        article(class='tile is-child content notification')
+                            p(class='title') d-astar
+                            a(href='https://github.com/ReeceJones/d-astar', class='subtitle has-text-link') 
+                                |="source"
+                                i(class='fas fa-code-branch')
+                            br
+                            img(src='/d-astar.png')
+                            p
+                                |="When learning D, I needed something to push me to learn the specifics of the language and the standard library. That's because it's kinda hard to do that without any goal, and so you'd just be blindly writing code without any idea how to apply it. So, I decided that I would make a maze solver since it seemed like a moderately difficult project with some research, and there were lots of places I could apply D to."
+                            p
+                                |="Anyways, it works. I'm not sure how it stacks up in terms of speed and optimization, but it was a ton of fun to make. Looking back at the project, there are a lot of changes that I would make now to use more D features, and I would probably use a more efficient implementation of the algorithm. But, it is really fast, and it has support for things like different heuristics, and different settings and stuff."
+                            p
+                                |="After doing this project, I would definitely recommend D. I can't imagine how awful it would've been if I used this implementation in C++. Things like CTFE just made this a lot of fun, and more easy than I thought."
+
+                        article(class='tile is-child content notification')
+                            p(class='title') STRAFE
+                            a(href='https://github.com/ReeceJones/STRAFE', class='subtitle has-text-link') 
+                                |="source"
+                                i(class='fas fa-code-branch')
+                            img(src='/STRAFE.png')
+                            p
+                                |="At some point I got a little bored playing video games, so I decided to make a game hack, and this was the result. I went all out on this. When I was actively working on this, it was pretty advanced for the time. The only real thing that it lacked that would've made it be at the top was back tracking."
+                            p
+                                |="Because of this project I have a much better understanding of memory management. Not a perfect understanding mind you, but I do understand how memory works a lot better."
+                            p
+                                |="Some of the cool things I did in this were custom models, colored walls, and a nice and clean menu."
     include templates/footer
 
