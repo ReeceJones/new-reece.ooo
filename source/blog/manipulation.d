@@ -12,7 +12,7 @@ import std.stdio;
 SiteConfig config;
 
 /// Create a post
-bool simpleCreatePost(string title, string subtitle, string creator, string post)
+bool simpleCreatePost(string title, string subtitle, string creator, string post, string overrideDate)
 {
     log("creating post: ", title, ", ", subtitle, ", ", creator, ", ", post);
     if (config is null)
@@ -29,8 +29,11 @@ bool simpleCreatePost(string title, string subtitle, string creator, string post
     int id = to!int(strid);
     config.write("database", "id", id+1);
     string url = Base64URL.encode(cast(ubyte[])title);
-    string date = "[ " ~ Clock.currTime.toSimpleString ~ " ] ";
-
+    string date;
+    if (overrideDate.length == 0)
+        date = "[ " ~ Clock.currTime.toSimpleString ~ " ] ";
+    else
+        date = overrideDate;
     return insertPost!(name, date, description, content, url, author, id);
 }
 

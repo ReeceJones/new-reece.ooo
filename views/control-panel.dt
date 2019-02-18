@@ -17,6 +17,9 @@ html(lang='en')
                                 input(class='input', type='text', placeholder='title', id='title')
                         div(class='field')
                             div(class='control')
+                                input(class='input', type='text', placeholder='date override', id='date')
+                        div(class='field')
+                            div(class='control')
                                 input(class='input', type='text', placeholder='description', id='description')
                         div(class='field')
                             div(class='control')
@@ -35,14 +38,17 @@ html(lang='en')
                         div(class='panel-block')
                             div(class='field')
                                 div(class='control')
-                                    button(class='button is-link is-primary', id="new-post") create new post
+                                    button(class='button is-link is-primary', id="new-post") 
+                                        !="<i class=\"far fa-plus-square\"></i> create new post"
                         - foreach(post; posts)
                             div(class='panel-block')
                                 div(class='field is-grouped')
                                     div(class='control')
-                                        button(class='button is-link is-warning', id="edit-" ~ post.url, onclick="postEdit(\"" ~ post.url ~ "\");") edit
+                                        button(class='button is-link is-warning', id="edit-" ~ post.url, onclick="postEdit(\"" ~ post.url ~ "\");") 
+                                            !="<i class=\"far fa-edit\"></i> edit"
                                     div(class='control')
-                                        button(class='button is-link is-danger deletepost', id="delete-" ~ post.url, onclick="postDelete(\"" ~ post.url ~ "\");") delete
+                                        button(class='button is-link is-danger deletepost', id="delete-" ~ post.url, onclick="postDelete(\"" ~ post.url ~ "\");") 
+                                            !="<i class=\"far fa-trash-alt\"></i> delete"
                                     a(href="/blog/" ~ post.url)
                                         strong #{ post.name }
                                     span(style='width: 15px')
@@ -77,7 +83,8 @@ html(lang='en')
                 $.post("/new-post", {
                     title : $("#title").val(),
                     description : $("#description").val(),
-                    content : $("#content").val()
+                    content : $("#content").val(),
+                    date : $("#date").val()
                 }, function(r) {
                     console.log(r);
                     location.reload();
@@ -90,6 +97,7 @@ html(lang='en')
                     title : $("#title").val(),
                     description : $("#description").val(),
                     content : $("#content").val(),
+                    date : $("#date").val(),
                     url:    $("#store").html()
                 }, function(r) {
                     console.log(r);

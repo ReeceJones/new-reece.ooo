@@ -106,7 +106,7 @@ public void insertPostSafe(ALIASES...)()
     insertPost!(ALIASES)();
 }
 
-public bool updatePost(string url, string title, string description, string content)
+public bool updatePost(string url, string title, string description, string content, string date)
 {
     bool exists = !blogs.find(Bson(["url" : Bson(url)])).empty;
     if (exists == false)
@@ -115,7 +115,7 @@ public bool updatePost(string url, string title, string description, string cont
     blogs.update(
         Bson(["name" : Bson(bp.name)]),
         Bson([
-        "date" : Bson(bp.date),
+        "date" : Bson(date.length == 0 ? bp.date : date),
         "name" : Bson(title),
         "id"   : Bson(cast(int)bp.id),
         "description" : Bson(description),

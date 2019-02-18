@@ -249,8 +249,9 @@ public void routeEditPost(HTTPServerRequest req, HTTPServerResponse res)
     string title = req.form["title"];
     string description = req.form["description"];
     string content = req.form["content"];
+    string date = req.form["date"];
 
-    updatePost(url, title, description, content);
+    updatePost(url, title, description, content, date);
     res.redirect("/control-panel");
 }
 
@@ -310,6 +311,7 @@ public void routeNewPost(HTTPServerRequest req, HTTPServerResponse res)
     string description = req.form["description"];
     string content = req.form["content"];
     string author = session.get!string("username");
-    simpleCreatePost(title, description, author, content);
+    string date = req.form["date"];
+    simpleCreatePost(title, description, author, content, date);
     res.redirect("/control-panel");
 }
