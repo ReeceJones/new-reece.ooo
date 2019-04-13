@@ -29,7 +29,7 @@ html(lang='en')
                                     div(class='g-recaptcha', data-sitekey=sitekey, style='width: 304px; margin: 0 auto;')
                         div(class='field is-grouped')
                             div(class='control')
-                                button(class='button is-link', id='submit') Post
+                                button(class='button is-link', id='submit', onclick='') Post
                 br
                 - foreach(comment; comments)
                     article(class='content')
@@ -81,10 +81,6 @@ html(lang='en')
                 $("#submit").removeClass("is-loading");
                 location.reload();
             });
-        });
-
-        $("#create").click(function() {
-            window.location.href = "/login";
         });
 
         function submitComment(context, name, content) {
