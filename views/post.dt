@@ -15,9 +15,9 @@ html(lang='en')
             div(class='container')
                 p(class='subtitle') Comments
                 p(class='content')
-                    button(class='button is-info', onclick='$("#comment-box").removeClass("is-hidden");') Leave Comment
+                    button(class='button is-info', onclick='baseComment()') Leave Comment
                 div(class='is-hidden', id='comment-box')
-                    form
+                    form(id="comment-form")
                         div(class='field')
                             div(class='control')
                                 textarea(class='textarea is-large has-fixed-size', placeholder='name', id='name')
@@ -39,7 +39,7 @@ html(lang='en')
                         - import std.conv;
                         a(onclick="showReply(\"#context-" ~ comment.context.text ~ "\");") reply
                         div(class="is-hidden", id="context-" ~ comment.context.text)
-                            form(class="form-" ~ comment.context.text)
+                            form(id="form-" ~ comment.context.text)
                                 div(class='field')
                                     div(class='control')
                                         textarea(class='textarea is-large has-fixed-size', placeholder='name', id="name-" ~ comment.context.text)
@@ -105,6 +105,11 @@ html(lang='en')
                 $("#submit").removeClass("is-loading");
                 location.reload();
             });
+        }
+
+        function baseComment() {
+            $("#captcha").appendTo("#comment-form");
+            $("#comment-box").removeClass("is-hidden");
         }
 
         function showReply(context) {
