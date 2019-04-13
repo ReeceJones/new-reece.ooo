@@ -14,8 +14,9 @@ html(lang='en')
         section(class='section')
             div(class='container')
                 p(class='subtitle') Comments
-                br
-                div
+                p(class='content')
+                    button(class='button is-info', onclick='$("#comment-box").removeClass("is-hidden");') Leave Comment
+                div(class='is-hidden', id='comment-box')
                     form
                         div(class='field')
                             div(class='control')
@@ -24,7 +25,7 @@ html(lang='en')
                             div(class='control')
                                 textarea(class='textarea', placeholder='comment', id='comment')
                         - if (sitekey != "")
-                            div(class='field')
+                            div(class='field', id='captcha')
                                 div(class='control')
                                     div(class='g-recaptcha', data-sitekey=sitekey, style='width: 304px; margin: 0 auto;')
                         div(class='field is-grouped')
@@ -38,17 +39,17 @@ html(lang='en')
                         - import std.conv;
                         a(onclick="showReply(\"#context-" ~ comment.context.text ~ "\");") reply
                         div(class="is-hidden", id="context-" ~ comment.context.text)
-                            form
+                            form(class="form-" ~ comment.context.text)
                                 div(class='field')
                                     div(class='control')
                                         textarea(class='textarea is-large has-fixed-size', placeholder='name', id="name-" ~ comment.context.text)
                                 div(class='field')
                                     div(class='control')
                                         textarea(class='textarea', placeholder='comment', id="comment-" ~ comment.context.text)
-                                - if (sitekey != "")
-                                    div(class='field')
-                                        div(class='control')
-                                            div(class='g-recaptcha', data-sitekey=sitekey, style='width: 304px; margin: 0 auto;')
+                                // - if (sitekey != "")
+                                //     div(class='field')
+                                //         div(class='control')
+                                //             div(class='g-recaptcha', data-sitekey=sitekey, style='width: 304px; margin: 0 auto;')
                                 div(class='field is-grouped')
                                     div(class='control')
                                         button(class='button is-link', type='button', id="submit-" ~ comment.context.text, onclick="submitComment(" ~ comment.context.text ~ ", $(\"#name-" ~ comment.context.text ~ "\").val(), $(\"#comment-" ~ comment.context.text ~ "\").val());") Post
@@ -107,6 +108,7 @@ html(lang='en')
         }
 
         function showReply(context) {
+            $("#captcha").appendTo("form-" + context.substring(9));
             $(context).removeClass("is-hidden");
             $(context).addClass("is-visible");
         }
