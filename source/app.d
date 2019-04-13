@@ -40,6 +40,7 @@ shared static this()
 	router.post("/edit-post", &routeEditPost);
 	router.post("/delete-post", &routeDeletePost);
 	router.post("/comment", &routeComment);
+	router.post("/remove-comment", &routeDeleteComment);
 
 
 	log("Loading server settings...");

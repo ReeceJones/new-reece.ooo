@@ -38,6 +38,8 @@ html(lang='en')
                         p #{ comment.content }
                         - import std.conv;
                         a(onclick="showReply(\"#context-" ~ comment.context.text ~ "\");") reply
+                        - if (admin)
+                            a(class='has-text-danger', style='padding-left: 25px', onclick="deleteComment(" ~ comment.context.text ~ ",\"" ~ comment.author ~ "\",\"" ~ comment.content ~ "\");") delete
                         div(class="is-hidden", id="context-" ~ comment.context.text)
                             form(id="form-" ~ comment.context.text)
                                 div(class='field')
@@ -46,10 +48,6 @@ html(lang='en')
                                 div(class='field')
                                     div(class='control')
                                         textarea(class='textarea', placeholder='comment', id="comment-" ~ comment.context.text)
-                                // - if (sitekey != "")
-                                //     div(class='field')
-                                //         div(class='control')
-                                //             div(class='g-recaptcha', data-sitekey=sitekey, style='width: 304px; margin: 0 auto;')
                                 div(class='field is-grouped')
                                     div(class='control')
                                         button(class='button is-link', type='button', id="submit-" ~ comment.context.text, onclick="submitComment(" ~ comment.context.text ~ ", $(\"#name-" ~ comment.context.text ~ "\").val(), $(\"#comment-" ~ comment.context.text ~ "\").val());") Post
@@ -60,6 +58,8 @@ html(lang='en')
                                 article(class='content indent')
                                     strong #{ reply.author }
                                     p #{ reply.content }
+                                    - if (admin)
+                                        a(class='has-text-danger', onclick="deleteComment(" ~ comment.context.text ~ ",\"" ~ reply.author ~ "\",\"" ~ reply.content ~ "\");") delete
     :css
         .indent {
             position: relative;
@@ -85,10 +85,6 @@ html(lang='en')
         });
 
         function submitComment(context, name, content) {
-            console.log(context);
-            console.log(name);
-            console.log(content);
-            
             $("submit-" + context).addClass("is-loading");
             var captchaResponse = "";
             if ($(".g-recaptcha").length > 0)
@@ -102,7 +98,19 @@ html(lang='en')
                 "g-recaptcha-response" : captchaResponse
             }, 
             function(response) {
-                $("#submit").removeClass("is-loading");
+                $("#submit-" + context).removeClass("is-loading");
+                location.reload();
+            });
+        }
+
+        function deleteComment(context, name, content) {
+            $.post("/remove-comment", {
+                name :  name,
+                comment :  content,
+                url:        window.location.pathname,
+                context:    context
+            }, 
+            function(response) {
                 location.reload();
             });
         }
@@ -113,7 +121,7 @@ html(lang='en')
         }
 
         function showReply(context) {
-            $("#captcha").appendTo("form-" + context.substring(9));
+            $("#captcha").appendTo("context-" + context.substring(9));
             $(context).removeClass("is-hidden");
             $(context).addClass("is-visible");
         }

@@ -150,6 +150,36 @@ public void addComment(string url, int context, string name, string comment)
     blogs.update(Bson(["id": Bson(bp.id)]), bp);
 }
 
+public void removeComment(string url, int context, string name, string comment)
+{
+    string replace(string s, string pattern, string rep)
+    {
+        import arrops = std.array;
+        ubyte[] ub = cast(ubyte[])s;
+        arrops.replace(s, cast(ubyte[])pattern, cast(ubyte[])rep);
+        return cast(string)ub;
+    }
+    // find the blog post
+    url = url.replace("/blog/", "");
+    BlogPost bp = blogs.findOne!(BlogPost)(Bson(["url":Bson(url)]));
+
+    Comment[] comments;
+    foreach(comm; bp.comments)
+    {
+        Comment mod = comm;
+        mod.replies = [];
+        if (comm.author == name && comm.context == context && comm.content == comment)
+            continue;
+        foreach(reply; comm.replies)
+            if (!(reply.author == name && reply.context == context && reply.content == comment))
+                mod.replies ~= reply;
+        comments ~= mod;
+    }
+    bp.comments = comments;
+
+    blogs.update(Bson([ "id" : Bson(bp.id) ]), bp);
+}
+
 public void removePost(string url)
 {
     blogs.remove( Bson(["url" : Bson(url) ]) );

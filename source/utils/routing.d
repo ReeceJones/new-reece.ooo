@@ -348,8 +348,6 @@ public void routeComment(HTTPServerRequest req, HTTPServerResponse res)
     int context = req.form["context"].to!int;
     string url = req.form["url"];
 
-    writeln(name, "\t", comment, "\t", context, "\t", url);
-
     // comment(url, context, name, comment);
 
     addComment(url, context, name, comment);
@@ -359,3 +357,33 @@ public void routeComment(HTTPServerRequest req, HTTPServerResponse res)
     auto vibeJson = Json(j);
     res.writeJsonBody(vibeJson);
 }
+
+
+public void routeDeleteComment(HTTPServerRequest req, HTTPServerResponse res)
+{
+    //missing username/password, tell the user to fill them out
+    if (!("name" in req.form && "comment" in req.form && "context" in req.form && "url" in req.form))
+    {
+        writeln("missing stuff");
+        JSONValue j = JSONValue("{}");
+        j["error"] = JSONValue(2);
+        auto vibeJson = Json(j);
+        res.writeJsonBody(vibeJson);
+        return;
+    }
+
+    string name = req.form["name"];
+    string comment = req.form["comment"];
+    int context = req.form["context"].to!int;
+    string url = req.form["url"];
+
+    // comment(url, context, name, comment);
+
+    removeComment(url, context, name, comment);
+
+    JSONValue j = parseJSON("{}");
+    j["error"] = JSONValue(0);
+    auto vibeJson = Json(j);
+    res.writeJsonBody(vibeJson);
+}
+
