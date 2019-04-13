@@ -121,7 +121,7 @@ html(lang='en')
         }
 
         function showReply(context) {
-            $("#captcha").appendTo("context-" + context.substring(9));
+            $("#captcha").appendTo("#context-" + context.substring(9));
             $(context).removeClass("is-hidden");
             $(context).addClass("is-visible");
         }
