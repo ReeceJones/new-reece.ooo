@@ -88,10 +88,11 @@ html(lang='en')
             console.log(name);
             console.log(content);
             
-            $("#submit").addClass("is-loading");
+            $("submit-" + context).addClass("is-loading");
             var captchaResponse = "";
             if ($(".g-recaptcha").length > 0)
                 captchaResponse = grecaptcha.getResponse();
+            console.log(captchaResponse);
             $.post("/comment", {
                 name :  name,
                 comment :  content,
