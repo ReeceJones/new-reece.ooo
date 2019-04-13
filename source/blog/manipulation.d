@@ -9,7 +9,6 @@ import std.conv;
 import std.datetime.systime;
 import std.stdio;
 
-SiteConfig config;
 
 /// Create a post
 bool simpleCreatePost(string title, string subtitle, string creator, string post, string overrideDate)
@@ -24,7 +23,7 @@ bool simpleCreatePost(string title, string subtitle, string creator, string post
     string description = subtitle;
     string author = creator;
     string content = post;
-    
+
     string strid = config.lookup("database", "id");
     int id = to!int(strid);
     config.write("database", "id", id+1);

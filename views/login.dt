@@ -20,9 +20,10 @@ html(lang='en')
                                 label(class='label') password
                                 div(class='control')
                                     input(class='input', id='password', type='password', placeholder='username')
-                            div(class='field')
-                                div(class='control')
-                                    div(class='g-recaptcha', data-sitekey=sitekey, style='width: 304px; margin: 0 auto;')
+                            - if (sitekey != "")
+                                div(class='field')
+                                    div(class='control')
+                                        div(class='g-recaptcha', data-sitekey=sitekey, style='width: 304px; margin: 0 auto;')
                             div(class='field is-grouped')
                                 div(class='control')
                                     button(class='button is-link', id='submit') Submit
@@ -32,10 +33,14 @@ html(lang='en')
         :javascript
             $("#submit").click(function() {
                 $("#submit").addClass("is-loading");
+                var captchaResponse = "";
+                if ($(".g-recaptcha").length > 0)
+                    captchaResponse = grecaptcha.getResponse();
+
                 $.post("/login", {
                     username : $("#username").val(),
                     password : $("#password").val(),
-                    "g-recaptcha-response" : grecaptcha.getResponse()
+                    "g-recaptcha-response" : captchaResponse
                 }, 
                 function(response) {
                     $("#submit").removeClass("is-loading");

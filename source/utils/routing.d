@@ -3,6 +3,7 @@ module utils.routing;
 import std.stdio;
 
 import utils.log;
+import utils.config;
 
 import vibe.d;
 
@@ -90,7 +91,8 @@ public void routeBlogRequest(HTTPServerRequest req, HTTPServerResponse res)
         static foreach(i, member; __traits(allMembers, BlogPost))
             mixin(typeof(__traits(getMember, BlogPost, __traits(allMembers, BlogPost)[i])).stringof ~ " " ~ __traits(allMembers, BlogPost)[i] ~ " = post." ~ __traits(allMembers, BlogPost)[i] ~ ";"); // I love metaprogramming
         content = filterMarkdown(content, MarkdownFlags.backtickCodeBlocks | MarkdownFlags.keepLineBreaks | MarkdownFlags.tables);
-        renderPage!("post.dt", date, name, description, content, url, author)(req, res);
+	    string sitekey = config.lookup("recaptcha", "sitekey");
+        renderPage!("post.dt", date, name, description, content, url, author, comments, sitekey)(req, res);
     }
     else
     {
@@ -314,4 +316,46 @@ public void routeNewPost(HTTPServerRequest req, HTTPServerResponse res)
     string date = req.form["date"];
     simpleCreatePost(title, description, author, content, date);
     res.redirect("/control-panel");
+}
+
+
+public void routeComment(HTTPServerRequest req, HTTPServerResponse res)
+{
+    //missing username/password, tell the user to fill them out
+    if (!("name" in req.form && "comment" in req.form && "context" in req.form && "url" in req.form))
+    {
+        writeln("missing stuff");
+        JSONValue j = JSONValue("{}");
+        j["error"] = JSONValue(2);
+        auto vibeJson = Json(j);
+        res.writeJsonBody(vibeJson);
+        return;
+    }
+
+    // submit the captcha to make sure this is legit
+    string captcha = req.form["g-recaptcha-response"];
+    if (!submitCaptchaRequest(captcha))
+    {
+        JSONValue j = JSONValue("{}");
+        j["error"] = JSONValue(1);
+        auto vibeJson = Json(j);
+        res.writeJsonBody(vibeJson);
+        return;
+    }
+
+    string name = req.form["name"];
+    string comment = req.form["comment"];
+    int context = req.form["context"].to!int;
+    string url = req.form["url"];
+
+    writeln(name, "\t", comment, "\t", context, "\t", url);
+
+    // comment(url, context, name, comment);
+
+    addComment(url, context, name, comment);
+
+    JSONValue j = parseJSON("{}");
+    j["error"] = JSONValue(0);
+    auto vibeJson = Json(j);
+    res.writeJsonBody(vibeJson);
 }

@@ -7,6 +7,8 @@ import std.algorithm;
 import core.thread;
 import std.conv;
 
+public SiteConfig config;
+
 /// A class that can be used to store certain config values
 class SiteConfig
 {

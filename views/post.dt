@@ -11,5 +11,113 @@ html(lang='en')
                 br
                 article(class='content')
                     |!=content
+        section(class='section')
+            div(class='container')
+                p(class='subtitle') Comments
+                br
+                div
+                    form
+                        div(class='field')
+                            div(class='control')
+                                textarea(class='textarea is-large has-fixed-size', placeholder='name', id='name')
+                        div(class='field')
+                            div(class='control')
+                                textarea(class='textarea', placeholder='comment', id='comment')
+                        - if (sitekey != "")
+                            div(class='field')
+                                div(class='control')
+                                    div(class='g-recaptcha', data-sitekey=sitekey, style='width: 304px; margin: 0 auto;')
+                        div(class='field is-grouped')
+                            div(class='control')
+                                button(class='button is-link', id='submit') Post
+                br
+                - foreach(comment; comments)
+                    article(class='content')
+                        strong #{ comment.author }
+                        p #{ comment.content }
+                        - import std.conv;
+                        a(onclick="showReply(\"#context-" ~ comment.context.text ~ "\");") reply
+                        div(class="is-hidden", id="context-" ~ comment.context.text)
+                            form
+                                div(class='field')
+                                    div(class='control')
+                                        textarea(class='textarea is-large has-fixed-size', placeholder='name', id="name-" ~ comment.context.text)
+                                div(class='field')
+                                    div(class='control')
+                                        textarea(class='textarea', placeholder='comment', id="comment-" ~ comment.context.text)
+                                - if (sitekey != "")
+                                    div(class='field')
+                                        div(class='control')
+                                            div(class='g-recaptcha', data-sitekey=sitekey, style='width: 304px; margin: 0 auto;')
+                                div(class='field is-grouped')
+                                    div(class='control')
+                                        button(class='button is-link', type='button', id="submit-" ~ comment.context.text, onclick="submitComment(" ~ comment.context.text ~ ", $(\"#name-" ~ comment.context.text ~ "\").val(), $(\"#comment-" ~ comment.context.text ~ "\").val());") Post
+                                    a(style='float: right', onclick="hideReply(\"#context-" ~ comment.context.text ~ "\");") cancel
+                            
+                        div(class="has-background-light")
+                            - foreach(reply; comment.replies)
+                                article(class='content indent')
+                                    strong #{ reply.author }
+                                    p #{ reply.content }
+    :css
+        .indent {
+            position: relative;
+            left: 24px;
+        }
+    :javascript
+        $("#submit").click(function() {
+            $("#submit").addClass("is-loading");
+            var captchaResponse = "";
+            if ($(".g-recaptcha").length > 0)
+                captchaResponse = grecaptcha.getResponse();
+            $.post("/comment", {
+                name :  $("#name").val(),
+                comment :  $("#comment").val(),
+                url:        window.location.pathname,
+                context:    -1,
+                "g-recaptcha-response" : captchaResponse
+            }, 
+            function(response) {
+                $("#submit").removeClass("is-loading");
+                location.reload();
+            });
+        });
+
+        $("#create").click(function() {
+            window.location.href = "/login";
+        });
+
+        function submitComment(context, name, content) {
+            console.log(context);
+            console.log(name);
+            console.log(content);
+            
+            $("#submit").addClass("is-loading");
+            var captchaResponse = "";
+            if ($(".g-recaptcha").length > 0)
+                captchaResponse = grecaptcha.getResponse();
+            $.post("/comment", {
+                name :  name,
+                comment :  content,
+                url:        window.location.pathname,
+                context:    context,
+                "g-recaptcha-response" : captchaResponse
+            }, 
+            function(response) {
+                $("#submit").removeClass("is-loading");
+                location.reload();
+            });
+        }
+
+        function showReply(context) {
+            $(context).removeClass("is-hidden");
+            $(context).addClass("is-visible");
+        }
+        function hideReply(context) {
+            $(context).removeClass("is-visible");
+            $(context).addClass("is-hidden");
+        }
+
+
     include templates/footer
 

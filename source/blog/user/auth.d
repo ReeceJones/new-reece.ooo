@@ -59,7 +59,6 @@ UserAuth createUser(string username, string pass)
     auto r = insertUserSafe!(username, password, admin);
     if (r == true)
     {
-
         return UserAuth.AUTH_SUCCESS_NORMAL;
     }   
     return UserAuth.AUTH_ERR_DATABASE; 

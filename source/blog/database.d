@@ -41,18 +41,12 @@ public BlogPost[] postQuery(ALIASES...)()
     {
         query[__traits(identifier, ALIASES[i])] = Bson(ALIASES[i]);
     }
-    auto queryResult = blogs.find(query);
+    auto queryResult = blogs.find!(BlogPost)(query);
     // now we fill out the post structs
     BlogPost[] posts;
     foreach(document; queryResult)
     {
-        BlogPost post;
-        static foreach(i, member; __traits(allMembers, BlogPost))
-        {
-            // pragma(msg, "post." ~ __traits(allMembers, BlogPost)[i] ~ " = cast(" ~ typeof(__traits(getMember, BlogPost, __traits(allMembers, BlogPost)[i])).stringof ~ ")document[\"" ~ __traits(allMembers, BlogPost)[i] ~ "\"];");
-            mixin("post." ~ __traits(allMembers, BlogPost)[i] ~ " = cast(" ~ typeof(__traits(getMember, BlogPost, __traits(allMembers, BlogPost)[i])).stringof ~ ")document[\"" ~ __traits(allMembers, BlogPost)[i] ~ "\"];");
-        }
-        posts ~= post;
+        posts ~= document;
     }
     posts.sort!((a,b) => a.id > b.id);
     return posts;
@@ -79,15 +73,7 @@ public bool insertPost(ALIASES...)()
         return false;
     
     // user doesn't exist, so we continue as normal
-    blogs.insert(Bson([
-        "date" : Bson(post.date),
-        "name" : Bson(post.name),
-        "id"   : Bson(cast(int)post.id),
-        "description" : Bson(post.description),
-        "content" : Bson(post.content),
-        "url" : Bson(post.url),
-        "author" : Bson(post.author)
-    ]));
+    blogs.insert(post);
     return true;
 }
 
@@ -112,18 +98,56 @@ public bool updatePost(string url, string title, string description, string cont
     if (exists == false)
         return false;
     auto bp = postQuery!url()[0];
-    blogs.update(
-        Bson(["name" : Bson(bp.name)]),
-        Bson([
-        "date" : Bson(date.length == 0 ? bp.date : date),
-        "name" : Bson(title),
-        "id"   : Bson(cast(int)bp.id),
-        "description" : Bson(description),
-        "content" : Bson(content),
-        "url" : Bson(bp.url),
-        "author" : Bson(bp.author)
-    ]));
+    bp.description = description;
+    bp.content = content;
+    bp.date = date.length == 0 ? bp.date : date;
+    bp.name = title;
+    blogs.update(Bson(["id": Bson(bp.id)]), bp);
+
     return true;
+}
+
+public void addComment(string url, int context, string name, string comment)
+{
+    string replace(string s, string pattern, string rep)
+    {
+        import arrops = std.array;
+        ubyte[] ub = cast(ubyte[])s;
+        arrops.replace(s, cast(ubyte[])pattern, cast(ubyte[])rep);
+        return cast(string)ub;
+    }
+    // find the blog post
+    url = url.replace("/blog/", "");
+    url.writeln;
+    BlogPost bp = blogs.findOne!(BlogPost)(Bson(["url":Bson(url)]));
+    bp.writeln;
+    // find the comment from context
+    if (context == -1)
+    {
+        // find max context
+        int maxContext = -1;
+        foreach (post; blogs.find!(BlogPost)(Bson(["url":Bson(url)])))
+        {
+            foreach (comm; post.comments)
+            {
+                if (comm.context > maxContext) 
+                    maxContext = comm.context;
+            }
+        }
+        bp.comments ~= Comment(name, comment, maxContext + 1, []);
+        writeln(bp.comments);
+    }
+    else
+    {
+        foreach (ref Comment comm; bp.comments)
+        {
+            if (comm.context == context)
+            {
+                comm.replies ~= Comment(name, comment, context, []);
+            }
+        }
+    }
+    blogs.update(Bson(["id": Bson(bp.id)]), bp);
 }
 
 public void removePost(string url)

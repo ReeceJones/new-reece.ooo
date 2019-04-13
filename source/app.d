@@ -12,7 +12,7 @@ import std.conv;
 
 shared static this()
 {
-	SiteConfig config = new SiteConfig("reece.ooo.json");
+	config = new SiteConfig("reece.ooo.json");
 	string sitekey = config.lookup("recaptcha", "sitekey");
 
 	log("Starting webserver - reece.ooo");
@@ -39,6 +39,7 @@ shared static this()
 	router.post("/get-post", &routeGetPost);
 	router.post("/edit-post", &routeEditPost);
 	router.post("/delete-post", &routeDeletePost);
+	router.post("/comment", &routeComment);
 
 
 	log("Loading server settings...");

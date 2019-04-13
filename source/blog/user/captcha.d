@@ -7,7 +7,7 @@ import std.stdio;
 import std.string;
 import utils.config;
 
-SiteConfig config;
+// SiteConfig config;
 
 /// Submit a captcha request
 bool submitCaptchaRequest(string captcharesponse)
@@ -16,6 +16,8 @@ bool submitCaptchaRequest(string captcharesponse)
         config = new SiteConfig("reece.ooo.json");
 
     string secret = config.lookup("recaptcha", "secret");
+    if (secret == "")
+        return true;
 
     //https://www.google.com/recaptcha/api/siteverify?secret=$your_secret&response=$client_captcha_response&remoteip=$user_ip
     auto result = parseJSON(get("https://www.google.com/recaptcha/api/siteverify?secret=" ~ secret ~ "&response=" ~ captcharesponse));
