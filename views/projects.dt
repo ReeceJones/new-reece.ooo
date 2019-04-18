@@ -15,6 +15,34 @@ html(lang='en')
                 div(class='tile is-ancestor')
                     div(class='tile is-parent is-vertical')
                         article(class='tile is-child content notification')
+                            p(class='title') mood
+                            a(href='https://github.com/ReeceJones/mood', class='subtitle has-text-link')
+                                |="source"
+                                i(class='fas fa-code-branch')
+                            p
+                                |="Diet can be a bit frustrating to work with primarily because of how static templates and more dynamic pages are seperated. If I want to build a website that requires lots of parameters to be passed to the templates for various purposes like authentification, content, or anything else, a considerable amount of boilerplate and redundant code is required. Obvisouly, this can be time consuming and very tiring since what happens is a lot of duplicate code that can't be easily abstracted away."
+                            p
+                                |!="This is very apparent with this website. I have a file with all my page routers in it, and it totals about <strong>400 lines</strong> in length. This is a problem. I can't even begin to imagine how bad this is for more complex sites that have way more pages to render than I do. I love D, and I love vibe.d, but there has to be a better solution."
+                            p
+                                |="So, after doing some more digging and finding no solution to this problem, I decided that I would create my own solution."
+                            p
+                                |="Behold! mood, my solution to this problem."
+                            p
+                                |="Why use mood over diet, or any other alternative? The answer is quite simple: the syntax is simple and straight forward. All you need to do to bake in some D code on a webpage is the following:"
+                            pre(class='prettyprint')
+                                code
+                                    | &lt?D
+                                    |   ...
+                                    | /?&gt
+                            p
+                                |="See? Simple. Nothing else required. No special rules. All you need to do is open those tags, and then you can write code in a similar fashion to how you would in PHP."
+                            p
+                                |="How does it work? To keep it simple, the html document is parsed when the project is compiled. Then any segments of D code is extracted, and placed it into a funtion that is ran whenever the page is loaded. This function returns the program output, and the webpage is reconstructed to use the program output."
+                            p
+                                |="Some other little quallity of life things I added to make mood super amazing are html templates, includes, and the ability to hook the render function."
+                            p
+                                |="In the future, I plan to transition this website to mood from diet. I also plan to add file caching, unit testing, and better error reporting to mood in the future."
+                        article(class='tile is-child content notification')
                             p(class='title') reece.ooo
                             a(href='https://github.com/ReeceJones/new-reece.ooo', class='subtitle has-text-link') 
                                 |="source"
