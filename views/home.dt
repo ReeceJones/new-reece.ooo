@@ -12,31 +12,16 @@ html(lang='en')
                         p(class='subtitle') a person who is passionate about computers and programming
         section(class='section')
             div(class='container')
-                - if (posts.length > 0)
-                    div(class='tile is-ancestor')
-                        div(class='tile is-parent')
+                - foreach(i; 0..3)
+                    - if (posts.length > 0 && i < posts.length)
+                        div(class='tile is-ancestor')
                             div(class='tile is-parent')
-                                div(class='tile is-child notification')
-                                    a(href="/blog/" ~ posts[0].url) 
-                                        p(class='title') #{ posts[0].name }
-                                    p(class='subtitle') #{ posts[0].date } - #{ posts[0].description }
-                                    article(class='content') 
-                                        != posts[0].content
-                            - if (posts.length > 1)
-                                div(class='tile is-parent is-vertical')
-                                    - if (posts.length > 1)
-                                        div(class='tile is-child notification')
-                                            a(href="/blog/" ~ posts[1].url) 
-                                                p(class='title') #{ posts[1].name }
-                                            p(class='subtitle') #{ posts[1].date } - #{ posts[1].description }
-                                            article(class='content')
-                                                != posts[1].content
-                                    - if (posts.length > 2)
-                                        div(class='tile is-child notification')
-                                            a(href="/blog/" ~ posts[1].url) 
-                                                p(class='title') #{ posts[2].name }
-                                            p(class='subtitle') #{ posts[2].date } - #{ posts[1].description }
-                                            article(class='content')
-                                                != posts[2].content
+                                div(class='tile is-parent')
+                                    div(class='tile is-child notification')
+                                        a(href="/blog/" ~ posts[i].url) 
+                                            p(class='title') #{ posts[i].name }
+                                        p(class='subtitle') #{ posts[i].date } - #{ posts[i].description }
+                                        article(class='content') 
+                                            != posts[i].content
     include templates/footer
 
