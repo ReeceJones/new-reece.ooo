@@ -1,8 +1,8 @@
 {
 	"description": "The new/current version of my website.",
 	"dependencies": {
-		"vibe-d": "~>0.8.4",
-		"dauth": "~>0.6.3"
+		"vibe-d": "~>0.8.5",
+		"dauth": "~>0.6.4"
 	},
 	"authors": [
 		"Reece Jones"
