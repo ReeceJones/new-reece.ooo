@@ -29,7 +29,7 @@ shared static this()
 	router.get("/blog", moodRender!"blog.html");
 	router.get("/blog/*", &routeBlogRequest);
 	router.get("/control-panel", &routeControlPanel);
-	router.get("/projects", &renderPage!("projects.dt"));
+	router.get("/projects", moodRender!"projects.html");
 	router.get("/altitude", &renderPage!("altitude.dt"));
 
 	// default rule, auto-server file from the public/ directory

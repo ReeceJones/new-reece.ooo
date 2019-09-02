@@ -55,22 +55,6 @@ public void renderPage(string PAGE, ALIASES...)(HTTPServerRequest req, HTTPServe
         res.render!(PAGE, /* our own aliases here */ active, admin, ALIASES);
 }
 
-/// Index router
-public void routeIndex(HTTPServerRequest req, HTTPServerResponse res)
-{
-    auto posts = getAllPosts();
-    foreach(ref post; posts)
-        post.content = filterMarkdown(post.content, MarkdownFlags.backtickCodeBlocks | MarkdownFlags.keepLineBreaks | MarkdownFlags.tables);
-    renderPage!("home.dt", posts)(req, res);
-}
-
-/// Blog index router
-public void routeBlogIndex(HTTPServerRequest req, HTTPServerResponse res)
-{
-    auto posts = getAllPosts();
-    renderPage!("blog.dt", posts)(req, res);
-}
-
 /// Blog request router
 public void routeBlogRequest(HTTPServerRequest req, HTTPServerResponse res)
 {

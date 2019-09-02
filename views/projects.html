@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <include:resources.html/>
+        <title>Reece's Projects</title>
+    </head>
+    <body>
+        <section class="hero is-dark is-small">
+            <div class="hero-head">
+                <include:nav.html/>
+            </div>
+            <div class="hero-body has-text-centered">
+                <div class="container">
+                    <article class="content">
+                        <p class="title" style="font-size: 2.5em">Projects</p>
+                    </article>
+                </div>
+            </div>
+            <div class="hero-footer"></div>
+        </section>
+        <section class="section">
+            <div class="container">
+                <div class="tile is-ancestor">
+                    <div class="tile is-parent is-vertical">
+                        <article class="tile is-child content notification">
+                            <p class="title">mood</p>
+                            <a href="https://github.com/ReeceJones/mood" class="subtitle has-text-link"><div>Source <i class="fas fa-code-branch"></i></div></a>
+                            <p>Diet can be a bit frustrating to work with primarily because of how static templates and more dynamic pages are seperated. If I want to build a website that requires lots of parameters to be passed to the templates for various purposes like authentification, content, or anything else, a considerable amount of boilerplate and redundant code is required. Obvisouly, this can be time consuming and very tiring since what happens is a lot of duplicate code that can't be easily abstracted away.</p>
+                            <p>This is very apparent with this website. I have a file with all my page routers in it, and it totals about <strong>400 lines</strong> in length. This is a problem. I can't even begin to imagine how bad this is for more complex sites that have way more pages to render than I do. I love D, and I love vibe.d, but there has to be a better solution.</p>
+                            <p>So, after doing some more digging and finding no solution to this problem, I decided that I would create my own solution.</p>
+                            <p>Behold! mood, my solution to this problem.</p>
+                            <p>Why use mood over diet, or any other alternative? The answer is quite simple: the syntax is simple and straight forward. All you need to do to bake in some D code on a webpage is the following:</p>
+                            <pre class="prettyprint">&lt?D
+    ...
+/?&rt</pre>
+                            <p>See? Simple. Nothing else required. No special rules. All you need to do is open those tags, and then you can write code in a similar fashion to how you would in PHP.</p>
+                            <p>How does it work? To keep it simple, the html document is parsed when the project is compiled. Then any segments of D code is extracted, and placed it into a funtion that is ran whenever the page is loaded. This function returns the program output, and the webpage is reconstructed to use the program output.</p>
+                            <p>Some other little quallity of life things I added to make mood super amazing are html templates, includes, and the ability to hook the render function.</p>
+                            <p>In the future, I plan to transition this website to mood from diet. I also plan to add file caching, unit testing, and better error reporting to mood in the future.</p>
+                        </article>
+                        <artlce class="tile is-child content notification">
+                            <p class="title">reece.ooo</p>
+                            <a href="https://github.com/ReeceJones/new-reece.ooo" class="subtitle has-text-link"><div>Source <i class="fas fa-code-branch"></i></div></a>
+                            <p>What more do I need to say? This project is the very site that you are on right now!</p>
+                            <p>In all seriousness, it has taken a while to get to this point. I have been trying to get this site to be a clean, and beautiful looking site for a couple years, and I think that this current iteration is that point that I was trying to reach. So how was the site made?</p>
+                            <p>I really like D. I think about D everyday. I am always blown away by just how powerful D is. I'm not very punny am I? Well, if you didn't get the hint, my favorite programming language is D. If the name seems similar to C, don't worry, it's not C or C++, but it is it's own system programming language. Fun fact: it's made by Walter Bright who made Zortech, the first native C++ compiler, so he's a pretty smart guy. I won't talk about exactly why I like D here, if you want a list of reasons contact me, but I will talk about how this website works!</p>
+                            <p>When I first started making this site way back, I used PHP. That kinda sucked. PHP was not that fun to me, and what made it worst was all the super helful server errors. So I gave that up real quick. For one period of time I decided to just make the site out of pure HTML and CSS without anything else, and if I wanted to add a blo post I would just copy the template file and add it myself...It should be pretty obvious why I never did this. I got it to a cool point where I had navbar animations and stuff, but expanding the site would've been awful. So then I found the vibe.d framework after giving up for a little bit.</p>
+                            <p>Vibe.d is awesome. Imagine all the benefits of PHP, except that you compile it, you have a coherent project structure, it uses diet instead of raw HTML, and it compiles giving you kick-ass runtime speed and functionality. That's what vibe.d is, and it was simple enough for me to understand it, and so I picked it up and learned it and then made my now old website. You can guess what's next...It had issues. Primarily, it was not expandable. It took a massive effort to refactor the spaghetti code that it was, especially the backend. Wow, the backend was one horrendeous mess. I eventually reallized that I needed to redo it, and so now here we are. Now I am still using vibe.d, but for all the frontend stuff I'm just using the amazing bulma.io css library. For the backend, I completely rewrote it, but this time I instead used insane amounts of metaprogramming to make the backend highly modular. Don't believe me? I add a field to a single struct, and all by itself, the backend will add this field to the database, and do all according calculations. It's great.</p>
+                            <p>Anyways, I like this site now, hopefully you do. Also give D a try, you may like it :)</p>
+                        </artlce>
+                        <article class="tile is-child content notification">
+                            <p class="title">d-astar</p>
+                            <a href="https://github.com/ReeceJones/d-astar" class="subtitle has-text-link"><div>Source <i class="fas fa-code-branch"></i></div></a>
+                            <br>
+                            <img src="/d-astar.png">
+                            <p>When learning D, I needed something to push me to learn the specifics of the language and the standard library. That's because it's kinda hard to do that without any goal, and so you'd just be blindly writing code without any idea how to apply it. So, I decided that I would make a maze solver since it seemed like a moderately difficult project with some research, and there were lots of places I could apply D to.</p>
+                            <p>Anyways, it works. I'm not sure how it stacks up in terms of speed and optimization, but it was a ton of fun to make. Looking back at the project, there are a lot of changes that I would make now to use more D features, and I would probably use a more efficient implementation of the algorithm. But, it is really fast, and it has support for things like different heuristics, and different settings and stuff.</p>
+                            <p>After doing this project, I would definitely recommend D. I can't imagine how awful it would've been if I used this implementation in C++. Things like CTFE just made this a lot of fun, and more easy than I thought.</p>
+                        </article>
+                        <article class="tile is-child content notification">
+                            <p class="title">STRAFE</p>
+                            <a href="https://github.com/ReeceJones/STRAFE" class="subtitle has-text-link"><div>Source <i class="fas fa-code-branch"></i></div></a>
+                            <br>
+                            <img src="/STRAFE.png">
+                            <p>At some point I got a little bored playing video games, so I decided to make a game hack, and this was the result. I went all out on this. When I was actively working on this, it was pretty advanced for the time. The only real thing that it lacked that would've made it be at the top was back tracking.</p>
+                            <p>This project helped me gain a better understanding of the specifics of how memory works, and how the program interacts with memory. The understanding of memory from the project changed my mindset to the way that I approached problems so that I would consider how the memory would be impacted. The understanding of memory from this project has even helped me track down bugs in other projects.</p>
+                            <p>Some of the I'm the most proud of are the custom models, colored walls, and a nice and clean menu.</p>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
+    <include:footer.html/>
+</html>
