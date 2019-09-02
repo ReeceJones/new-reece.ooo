@@ -1,0 +1,48 @@
+<?D
+import blog.post: BlogPost;
+import blog.manipulation: getAllPosts;
+import vibe.textfilter.markdown: MarkdownFlags, filterMarkdown;
+
+string toHTML(BlogPost post)
+{
+    return `<article class="content notification">
+                <a href="/blog/` ~  post.url ~ `"><p class="title">` ~ post.name ~ `</p></a>
+                <p class="subtitle">` ~ post.date ~ ` - ` ~ post.description ~ `</p>
+            </article>`;
+}
+/?>
+<!DOCTYPE html>
+<html>
+    <head>
+        <include:resources.html/>
+    </head>
+    <body>  
+        <section class="hero is-dark is-small">
+            <div class="hero-head">
+                <include:nav.html/>
+            </div>
+            <div class="hero-body has-text-centered">
+                <div class="container">
+                    <article class="content">
+                        <p class="title" style="font-size: 2.5em">Blog Posts</p>
+                    </article>
+                </div>
+            </div>
+            <div class="hero-footer"></div>
+        </section>
+        <section class="section">
+            <div class="container">
+                <?D
+                    {
+                        auto posts = getAllPosts();
+                        foreach(post; posts)
+                        {
+                            output(toHTML(post));
+                        }
+                    }
+                /?>
+            </div>
+        </section>
+    </body>
+    <include:footer.html/>
+</html>
