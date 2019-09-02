@@ -23,7 +23,7 @@ shared static this()
 	auto router = new URLRouter;
 
 	router.get("/", moodRender!"index.html");
-	router.get("/login", &renderPage!("login.dt", sitekey));
+	router.get("/login", moodRender!("login.html", sitekey));
 	router.get("/create", &renderPage!("create.dt", sitekey));
 	router.get("/logout", &routeLogout);
 	router.get("/blog", moodRender!"blog.html");

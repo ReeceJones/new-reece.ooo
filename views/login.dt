@@ -55,7 +55,7 @@ html(lang='en')
                         case 2:
                         $("#error-field").css("visibility", "visible");
                         $("#error-field-content").html("Authentification error: Invalid username/password error");
-                        breal;
+                        break;
                         case 1:
                         $("#error-field").css("visibility", "visible");
                         $("#error-field-content").html("Authentification error: Captcha error");
