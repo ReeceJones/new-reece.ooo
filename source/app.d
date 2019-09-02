@@ -30,7 +30,7 @@ shared static this()
 	router.get("/blog/*", &routeBlogRequest);
 	router.get("/control-panel", &routeControlPanel);
 	router.get("/projects", moodRender!"projects.html");
-	router.get("/altitude", &renderPage!("altitude.dt"));
+	router.get("/altitude", moodRender!("altitude.html"));
 
 	// default rule, auto-server file from the public/ directory
 	router.get("*", serveStaticFiles("public/"));
@@ -54,16 +54,13 @@ shared static this()
 
 	void handleError(HTTPServerRequest req, HTTPServerResponse res, HTTPServerErrorInfo err)
 	{
+		string error;
+		
 		if (err.code == 404)
-		{
-			string error = "404: You've made a wrong turn";
-			renderPage!("error.dt", error)(req, res);
-		}
+			error = "404, you've made a wrong turn.";
 		else
-		{
-			string error = text(err.code);
-			renderPage!("error.dt", error)(req, res);
-		}
+			error = text(err.code);
+		moodRender!("error.html", error)()(req, res);
 	}
 
 

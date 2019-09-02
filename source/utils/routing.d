@@ -20,6 +20,8 @@ import blog.user.captcha;
 
 import blog.stats.page;
 
+import mood.vibe: moodRender;
+
 /**
 Function to uniformly render a diet page. This allows us to log page requests, add authentification to each page, etc.
 Params:
@@ -81,7 +83,7 @@ public void routeBlogRequest(HTTPServerRequest req, HTTPServerResponse res)
     else
     {
         string error = "404: You've made a wrong turn";
-        renderPage!("error.dt", error)(req, res);
+        moodRender!("error.html", error)()(req, res);
     }
 }
 
