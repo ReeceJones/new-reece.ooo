@@ -24,7 +24,7 @@ shared static this()
 
 	router.get("/", moodRender!"index.html");
 	router.get("/login", moodRender!("login.html", sitekey));
-	router.get("/create", &renderPage!("create.dt", sitekey));
+	router.get("/create", moodRender!("create.html", sitekey));
 	router.get("/logout", &routeLogout);
 	router.get("/blog", moodRender!"blog.html");
 	router.get("/blog/*", &routeBlogRequest);
