@@ -10,6 +10,8 @@ import blog.user.auth;
 
 import std.conv;
 
+import mood.vibe;
+
 shared static this()
 {
 	config = new SiteConfig("reece.ooo.json");
@@ -21,6 +23,7 @@ shared static this()
 	auto router = new URLRouter;
 
 	router.get("/", &routeIndex);
+	router.get("/home2", moodRender!"index.html");
 	router.get("/login", &renderPage!("login.dt", sitekey));
 	router.get("/create", &renderPage!("create.dt", sitekey));
 	router.get("/logout", &routeLogout);

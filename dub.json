@@ -1,16 +1,19 @@
 {
-	"description": "The new/current version of my website.",
-	"dependencies": {
-		"vibe-d": "~>0.8.5",
-		"dauth": "~>0.6.4"
-	},
 	"authors": [
 		"Reece Jones"
 	],
-	"targetName": "website",
-	"targetType": "executable",
 	"copyright": "Copyright © 2019, Reece Jones",
+	"dependencies": {
+		"dauth": "~>0.6.4",
+		"mood": "~>0.2.1",
+		"vibe-d": "~>0.8.5"
+	},
+	"description": "The new/current version of my website.",
 	"license": "proprietary",
 	"name": "new-reece-ooo",
-	"versions": ["VibeDefaultMain"]
+	"targetName": "website",
+	"targetType": "executable",
+	"versions": [
+		"VibeDefaultMain"
+	]
 }
