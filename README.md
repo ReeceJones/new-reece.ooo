@@ -12,5 +12,3 @@ I don't know why you even care about this, but here are some of the really cool 
 1. Uses MongoDB. Revolutionary, I know. I'm not much of an expert at SQL, but I do understand JSON very well and MongoDB uses JSON documents to store and represent data so it was a pretty obvious choice for me especially since I really am not doing anything complicated with this site.
 2. Insane amount of metaprogramming on the backend. Serisouly guys, the backend is completely nuts. I read a single struct at compile time, and the entire backend adjusts to support the fields of the struct. I can simply add a new field like `comments` to the struct, and the backend would support it without any additional modification to the backend. I love it.
 3. vibe.d. I like vibe.d. It's relatively simple. It runs D code to make your pages dynamic. What more do you want from me?!?!
-## sad things
-Only 1 sad thing, but one of the dependent libraries, dauth, hasn't been updated in a while, and will be deprecated soon. I think I might fork it, because all other crypto libraries in D just don't work very well. Either they have complicated dependencies themselves, or have also been abandoned.
