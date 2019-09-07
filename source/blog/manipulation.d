@@ -14,9 +14,7 @@ import std.stdio;
 bool simpleCreatePost(string title, string subtitle, string creator, string post, string overrideDate)
 {
     log("creating post: ", title, ", ", subtitle, ", ", creator, ", ", post);
-
-    dbConnect();
-
+    
     string name = title;
     string description = subtitle;
     string author = creator;
@@ -34,7 +32,6 @@ bool simpleCreatePost(string title, string subtitle, string creator, string post
 
 BlogPost[] getAllPosts()
 {
-    dbConnect();
     return postQuery!()();
 }
 

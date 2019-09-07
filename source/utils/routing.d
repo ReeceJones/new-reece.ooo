@@ -65,7 +65,6 @@ public void routeBlogRequest(HTTPServerRequest req, HTTPServerResponse res)
     auto getPosts() // use this to prevent variable shadowing error
     {
         string url = req.requestURI[6..$];
-        dbConnect();
         auto posts = postQuery!(url);
         return posts;
     }

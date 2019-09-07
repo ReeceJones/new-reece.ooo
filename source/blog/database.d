@@ -18,8 +18,8 @@ private
     MongoCollection stats;
 }
 
-/// Connect to the mongo database
-public void dbConnect()
+// Connect to the mongo database
+shared static this()
 {
     mongoClient = connectMongoDB("127.0.0.1");
     users = mongoClient.getCollection("reece-ooo.users");

@@ -23,7 +23,6 @@ Returns: UserAuth enum value
 */
 UserAuth authenticateUser(string username, string password)
 {
-    dbConnect();
     auto users = userQuery!(username)();
     if (users.length == 0)
         return UserAuth.AUTH_ERR_DATABASE;
@@ -53,7 +52,6 @@ UserAuth createUser(string username, string pass)
     if (pass.length < 8)
         return UserAuth.AUTH_ERR_PASSWORD;
 
-    dbConnect();
     string password = makeHash(toPassword(cast(char[])pass)).toString();
     bool admin = false;
     auto r = insertUserSafe!(username, password, admin);
