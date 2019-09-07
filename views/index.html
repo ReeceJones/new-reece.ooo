@@ -49,9 +49,10 @@ string toHTML(BlogPost post)
                         auto posts = getAllPosts();
                         foreach(i, post; posts)
                         {
-                            if (i >= 3)
+                            if (i > 2)
                                 break;
-                            output(toHTML(post));
+                            else
+                                output(toHTML(post));
                         }
                     }
                 /?>
