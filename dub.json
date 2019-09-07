@@ -5,10 +5,7 @@
 	"copyright": "Copyright © 2019, Reece Jones",
 	"dependencies": {
 		"dauth": "~>0.6.4",
-		"mood": {
-			"path": "../mood",
-			"version": "~>master"
-		},
+		"mood": "~>0.2.2",
 		"vibe-d": "~>0.8.5"
 	},
 	"description": "The new/current version of my website.",
