@@ -9,13 +9,4 @@ struct BlogPost
     string content      = "no content";     /// Actual content of the blog post
     string url          = "";               /// Blog post url
     string author       = "no author";      /// Author of the blog post
-    Comment[] comments  = [];               /// The comments on a post
-}
-
-struct Comment
-{
-    string author;
-    string content;
-    int context;
-    Comment[] replies;
 }
