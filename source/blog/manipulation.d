@@ -14,8 +14,6 @@ import std.stdio;
 bool simpleCreatePost(string title, string subtitle, string creator, string post, string overrideDate)
 {
     log("creating post: ", title, ", ", subtitle, ", ", creator, ", ", post);
-    if (config is null)
-        config = new SiteConfig("reece.ooo.json");
 
     dbConnect();
 
@@ -24,16 +22,13 @@ bool simpleCreatePost(string title, string subtitle, string creator, string post
     string author = creator;
     string content = post;
 
-    string strid = config.lookup("database", "id");
-    int id = to!int(strid);
-    config.write("database", "id", id+1);
     string url = Base64URL.encode(cast(ubyte[])title);
     string date;
     if (overrideDate.length == 0)
         date = "[ " ~ Clock.currTime.toSimpleString ~ " ] ";
     else
         date = overrideDate;
-    return insertPost!(name, date, description, content, url, author, id);
+    return insertPost!(name, date, description, content, url, author);
 }
 
 

@@ -74,11 +74,12 @@ public void routeBlogRequest(HTTPServerRequest req, HTTPServerResponse res)
     if (posts.length > 0)
     {
         auto post = posts[0]; // there shouldn't be any duplicate posts, but we will take the first one
+        // expand members of post
         static foreach(i, member; __traits(allMembers, BlogPost))
             mixin(typeof(__traits(getMember, BlogPost, __traits(allMembers, BlogPost)[i])).stringof ~ " " ~ __traits(allMembers, BlogPost)[i] ~ " = post." ~ __traits(allMembers, BlogPost)[i] ~ ";"); // I love metaprogramming
         content = filterMarkdown(content, MarkdownFlags.backtickCodeBlocks | MarkdownFlags.keepLineBreaks | MarkdownFlags.tables);
 	    string sitekey = config.lookup("recaptcha", "sitekey");
-        renderPage!("post.dt", date, name, description, content, url, author, comments, sitekey)(req, res);
+        moodRender!("post.html", date, name, description, content, url, author, comments, sitekey)()(req, res);
     }
     else
     {
@@ -284,7 +285,7 @@ public void routeControlPanel(HTTPServerRequest req, HTTPServerResponse res)
     string author = session.get!string("username");
     auto posts = postQuery!(author)();
     auto stats = statsQuery!()();
-    renderPage!("control-panel.dt", posts, stats)(req, res);
+    moodRender!("control-panel.html", posts, stats)()(req, res);
 }
 
 public void routeNewPost(HTTPServerRequest req, HTTPServerResponse res)

@@ -48,7 +48,7 @@ public BlogPost[] postQuery(ALIASES...)()
     {
         posts ~= document;
     }
-    posts.sort!((a,b) => a.id > b.id);
+    posts.sort!((a,b) => a.date > b.date);
     return posts;
 }
 
@@ -102,7 +102,9 @@ public bool updatePost(string url, string title, string description, string cont
     bp.content = content;
     bp.date = date.length == 0 ? bp.date : date;
     bp.name = title;
-    blogs.update(Bson(["id": Bson(bp.id)]), bp);
+    blogs.update(Bson([
+        "url": Bson(url)
+        ]), bp);
 
     return true;
 }
@@ -147,7 +149,7 @@ public void addComment(string url, int context, string name, string comment)
             }
         }
     }
-    blogs.update(Bson(["id": Bson(bp.id)]), bp);
+    blogs.update(Bson(["url": Bson(url)]), bp);
 }
 
 public void removeComment(string url, int context, string name, string comment)
@@ -177,7 +179,7 @@ public void removeComment(string url, int context, string name, string comment)
     }
     bp.comments = comments;
 
-    blogs.update(Bson([ "id" : Bson(bp.id) ]), bp);
+    blogs.update(Bson([ "url" : Bson(url) ]), bp);
 }
 
 public void removePost(string url)

@@ -1,0 +1,64 @@
+<?D
+import std.conv: text;
+import blog.post;
+/?>
+<!DOCTYPE html>
+<html>
+    <head>
+        <include:resources.html/>
+        <title>reece.ooo - {{ name }}</title>
+    </head>
+    <body>
+        <include:nav.html/>
+        <section class="section">
+            <div class="container">
+                <p class="title">{{ name }}</p>
+                <p class="subtitle">{{ date }} - {{description }}</p>
+                <h3>By {{ author }}</h3>
+                <br>
+                <article class="content">
+                    {{ content }}
+                </article>
+            </div>
+        </section>
+        <section class="section">
+            <div class="container">
+                <p class="subtitle">Comments</p>
+                <p class="content">
+                    <button class="button is-info" onclick="baseComment()">Leave Comment</button>
+                </p>
+                <div class="is-hidden" id="comment-box">
+                    <form id="comment-form">
+                        <div class="field">
+                            <div class="control">
+                                <textarea class="textarea is-large has-fixed-size" placeholder="name" id="name"></textarea>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <textarea class="textarea" placeholder="comment" id="comment"></textarea>
+                            </div>
+                        </div>
+                        <?D
+                            if (sitekey != "")
+                            {
+                                output(`<div class="field">
+                                            <div class="control">
+                                                <div class="g-recaptcha" data-sitekey="` ~ sitekey ~ `" style="width:304px; margin: 0 auto;"></div>
+                                            </div>
+                                        </div>`);
+                            }
+                        /?>
+                        <div class="field is-grouped">
+                            <div class="control">
+                                <button class="button is-link" id="submit" onclick="">Post</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <br>
+            </div>
+        </section>
+    </body>
+    <include:footer.html/>
+</html>

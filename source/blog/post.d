@@ -9,7 +9,6 @@ struct BlogPost
     string content      = "no content";     /// Actual content of the blog post
     string url          = "";               /// Blog post url
     string author       = "no author";      /// Author of the blog post
-    int id              = 0;                /// internal blog post id. This is used to ensure that the blog posts are displayed in the correct order. This should be auto-incremented
     Comment[] comments  = [];               /// The comments on a post
 }
 
