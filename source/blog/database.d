@@ -26,23 +26,6 @@ shared static this()
     users = mongoClient.getCollection("reece-ooo.users");
     blogs = mongoClient.getCollection("reece-ooo.blogs");
     stats = mongoClient.getCollection("reece-ooo.stats");
-
-
-    // convert markdown items
-    auto queryResult = blogs.find!(BlogPost)(Bson([
-        "markdown": Bson(true)
-    ]));
-
-    foreach(q; queryResult)
-    {
-        q.content = filterMarkdown(q.content, MarkdownFlags.backtickCodeBlocks | MarkdownFlags.keepLineBreaks | MarkdownFlags.tables);
-        blogs.update(
-            Bson([
-                "url": Bson(q.url)
-            ]),
-            q
-        );
-    }
 }
 
 /**
