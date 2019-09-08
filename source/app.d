@@ -12,6 +12,8 @@ import std.conv;
 
 import mood.vibe;
 
+public HTTPServerSettings serverSettings;
+
 shared static this()
 {
 	config = new SiteConfig("reece.ooo.json");
@@ -31,6 +33,7 @@ shared static this()
 	router.get("/control-panel", &routeControlPanel);
 	router.get("/projects", moodRender!"projects.html");
 	router.get("/altitude", moodRender!("altitude.html"));
+	router.get("/editor/*", moodRender!("editor.html"));
 
 	// default rule, auto-server file from the public/ directory
 	router.get("*", serveStaticFiles("public/"));
@@ -44,10 +47,10 @@ shared static this()
 
 
 	log("Loading server settings...");
-	auto settings = new HTTPServerSettings;
-	settings.port = 9001;
-	settings.bindAddresses = ["::1", "0.0.0.0"];
-	settings.sessionStore = new MemorySessionStore;
+	serverSettings = new HTTPServerSettings;
+	serverSettings.port = 9001;
+	serverSettings.bindAddresses = ["::1", "0.0.0.0"];
+	serverSettings.sessionStore = new MemorySessionStore;
 
 
 	void handleError(HTTPServerRequest req, HTTPServerResponse res, HTTPServerErrorInfo err)
@@ -62,8 +65,8 @@ shared static this()
 	}
 
 
-	settings.errorPageHandler = &handleError;
+	serverSettings.errorPageHandler = &handleError;
 
 	log("Listening for requests");
-	listenHTTP(settings, router);
+	listenHTTP(serverSettings, router);
 }

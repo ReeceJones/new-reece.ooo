@@ -7,6 +7,7 @@ import utils.log;
 import blog.post;
 import blog.user.user;
 import blog.stats.stat;
+import vibe.d: filterMarkdown, MarkdownFlags;
 
 import std.stdio;
 
@@ -25,6 +26,23 @@ shared static this()
     users = mongoClient.getCollection("reece-ooo.users");
     blogs = mongoClient.getCollection("reece-ooo.blogs");
     stats = mongoClient.getCollection("reece-ooo.stats");
+
+
+    // convert markdown items
+    auto queryResult = blogs.find!(BlogPost)(Bson([
+        "markdown": Bson(true)
+    ]));
+
+    foreach(q; queryResult)
+    {
+        q.content = filterMarkdown(q.content, MarkdownFlags.backtickCodeBlocks | MarkdownFlags.keepLineBreaks | MarkdownFlags.tables);
+        blogs.update(
+            Bson([
+                "url": Bson(q.url)
+            ]),
+            q
+        );
+    }
 }
 
 /**
@@ -41,13 +59,8 @@ public BlogPost[] postQuery(ALIASES...)()
     {
         query[__traits(identifier, ALIASES[i])] = Bson(ALIASES[i]);
     }
-    auto queryResult = blogs.find!(BlogPost)(query);
-    // now we fill out the post structs
-    BlogPost[] posts;
-    foreach(document; queryResult)
-    {
-        posts ~= document;
-    }
+    auto posts = blogs.find!(BlogPost)(query).array;
+
     posts.sort!((a,b) => a.date > b.date);
     return posts;
 }

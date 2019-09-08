@@ -1,7 +1,7 @@
 <?D
 import blog.post: BlogPost;
 import blog.manipulation: getAllPosts;
-import vibe.textfilter.markdown: MarkdownFlags, filterMarkdown;
+import vibe.textfilter.markdown: MarkdownFlags;
 import vibe.http.server: HTTPServerRequest, HTTPServerResponse;
 
 
@@ -14,7 +14,7 @@ string toHTML(BlogPost post)
                             <a href="/blog/` ~ post.url ~ `"><p class="title">` ~ post.name ~ `</p></a>
                             <p class="subtitle">` ~ post.date ~ ` - ` ~ post.description ~ `</p>
                             <article class="content">
-                                ` ~ filterMarkdown(post.content, MarkdownFlags.backtickCodeBlocks | MarkdownFlags.keepLineBreaks | MarkdownFlags.tables) ~ `
+                                ` ~ post.content ~ `
                             </article>
                         </div>
                     </div>

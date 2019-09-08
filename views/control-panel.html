@@ -16,49 +16,6 @@ if (req.session)
         <?D
             if (admin)
             {
-                output(`<div style="visibility:hidden" id="store"></div>
-                            <div class="modal" id="post-editor">
-                                <div class="modal-background"></div>
-                                <div class="modal-card">
-                                    <header class="modal-card-head">
-                                        <p class="modal-card-title">create new post</p>
-                                        <button class="delete" aria-label="close"></button>
-                                    </header>
-                                    <section class="modal-card-body">
-                                            <div class="field">
-                                                <div class="control">
-                                                    <input type="text" class="input" placeholder="title" id="title">
-                                                </div>
-                                            </div>
-                                        <div class="field">
-                                            <div class="control">
-                                                <input type="text" class="input" placeholder="date override" id="date">
-                                            </div>
-                                        </div>
-                                        <div class="field">
-                                            <div class="control">
-                                                <input type="text" class="input" placeholder="description" id="description">
-                                            </div>
-                                        </div>
-                                        <div class="field">
-                                            <div class="control">
-                                                <textarea class="textarea" placeholder="content" rows="10" id="content"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="field">
-                                            <div class="control">
-                                                <button class="button is-link" id="submit-new">create post</button>
-                                            </div>
-                                        </div>
-                                        <div class="field">
-                                            <div class="control">
-                                                <button class="button is-link is-primary" id="submit-edit" style="visibility: hidden">save post</button>
-                                            </div>
-                                        </div>
-                                    </section>
-                                </div>
-                                <button class="modal-close is-large" aria-label="close"></button>
-                            </div>`);
                         output(`<section class="section">
                                     <div class="container">
                                         <nav class="panel">
@@ -66,7 +23,7 @@ if (req.session)
                                             <div class="panel-block">
                                                 <div class="field">
                                                     <div class="control">
-                                                        <button class="button is-link is-primary" id="new-post"><i class="far fa-plus-square"></i>create new post</button>
+                                                        <button class="button is-link is-primary" id="new-post" onclick='location = "/editor/new"'><i class="far fa-plus-square"></i>create new post</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -76,7 +33,7 @@ if (req.session)
                                                     output(`<div class="panel-block">
                                                                 <div class="field is-grouped">
                                                                     <div class="control">
-                                                                        <button class="button is-link is-warning" id="edit-` ~ post.url ~ `" onclick='postEdit("` ~ post.url ~ `");'>
+                                                                        <button class="button is-link is-warning" id="edit-` ~ post.url ~ `" onclick='location = "/editor/edit/` ~ post.url ~ `"'>
                                                                             <i class="far fa-edit"></i> edit
                                                                         </button>
                                                                     </div>
@@ -98,66 +55,6 @@ if (req.session)
             }
         /?>
         <script>
-            $("#new-post").click(function() {
-                $("#post-editor").addClass("is-active");
-                $("#submit-new").css("visibility", "visible");
-                $("#submit-edit").css("visibility", "hidden");
-            });
-            $(".modal-background").click(function() {
-                $("#post-editor").removeClass("is-active");
-            });
-            $(".modal-close").click(function() {
-                $("#post-editor").removeClass("is-active");
-            });
-            $(".delete").click(function() {
-                $("#post-editor").removeClass("is-active");
-            });
-
-
-            $("#submit-new").click(function() {
-                console.log("submit-new clicked");
-                $.post("/new-post", {
-                    title : $("#title").val(),
-                    description : $("#description").val(),
-                    content : $("#content").val(),
-                    date : $("#date").val()
-                }, function(r) {
-                    console.log(r);
-                    location.reload();
-                    $("#post-editor").removeClass("is-active");
-                });
-            });
-
-            $("#submit-edit").click(function() {
-                $.post("/edit-post", {
-                    title : $("#title").val(),
-                    description : $("#description").val(),
-                    content : $("#content").val(),
-                    date : $("#date").val(),
-                    url:    $("#store").html()
-                }, function(r) {
-                    console.log(r);
-                    location.reload();
-                    $("#post-editor").removeClass("is-active");
-                });
-            });
-
-            function postEdit(url) {
-                $.post("/get-post", {
-                    url: url
-                }, function(r) {
-                    console.log(r);
-                    $("#title").val(r.title);
-                    $("#description").val(r.description);
-                    $("#content").html(r.content);
-                    $("#store").html(r.url);
-
-                    $("#post-editor").addClass("is-active");
-                    $("#submit-new").css("visibility", "hidden");
-                    $("#submit-edit").css("visibility", "visible");
-                });
-            }
-
             function postDelete(url) {
                 $.post("/delete-post", {
                     url: url

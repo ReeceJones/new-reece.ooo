@@ -76,7 +76,7 @@ public void routeBlogRequest(HTTPServerRequest req, HTTPServerResponse res)
         // expand members of post
         static foreach(i, member; __traits(allMembers, BlogPost))
             mixin(typeof(__traits(getMember, BlogPost, __traits(allMembers, BlogPost)[i])).stringof ~ " " ~ __traits(allMembers, BlogPost)[i] ~ " = post." ~ __traits(allMembers, BlogPost)[i] ~ ";"); // I love metaprogramming
-        content = filterMarkdown(content, MarkdownFlags.backtickCodeBlocks | MarkdownFlags.keepLineBreaks | MarkdownFlags.tables);
+        
 	    string sitekey = config.lookup("recaptcha", "sitekey");
         moodRender!("post.html", date, name, description, content, url, author, sitekey)()(req, res);
     }
